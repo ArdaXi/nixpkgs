@@ -17,8 +17,10 @@ let
   version = "build01470";
 in
 stdenv.mkDerivation {
-  name = "freenet-${version}";
+  inherit seednodes;
+  inherit (stdenv) shell;
 
+  name = "freenet-${version}";
 
   src = fetchgit {
     url = https://github.com/freenet/fred;
@@ -52,9 +54,8 @@ stdenv.mkDerivation {
       -Xmx1024M freenet.node.NodeStarter
     EOF
     chmod +x $out/bin/freenet.wrapped
-    makeWrapper $freenetWrapper $out/bin/freenet \
-      --set FREENET_ROOT "$out" \
-      --set FREENET_SEEDNODES "${seednodes}"
+    substituteAll $freenetWrapper $out/bin/freenet
+    chmod +x $out/bin/freenet
   '';
 
   meta = {

@@ -1,4 +1,7 @@
-#! /usr/bin/env bash
+#!@shell@
+
+export FREENET_ROOT=@out@
+export FREENET_SEEDNODES=@seednodes@
 
 export FREENET_HOME="$HOME/.local/share/freenet"
 if [ -n "$XDG_DATA_HOME" ]
